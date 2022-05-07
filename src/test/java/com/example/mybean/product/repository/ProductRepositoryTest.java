@@ -1,4 +1,4 @@
-package com.example.mybean.product;
+package com.example.mybean.product.repository;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.example.mybean.product.repository.ProductRepository;
+import com.example.mybean.product.Product;
 
 @SpringBootTest
 @ActiveProfiles("test")
