@@ -1,6 +1,6 @@
 package com.example.mybean.product.repository;
 
-import static com.example.mybean.order.commons.JdbcUtils.*;
+import static com.example.mybean.commons.JdbcUtils.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;

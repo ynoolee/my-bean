@@ -1,4 +1,4 @@
-package com.example.mybean.order.commons;
+package com.example.mybean.commons;
 
 import java.nio.ByteBuffer;
 import java.sql.Timestamp;

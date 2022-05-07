@@ -1,4 +1,4 @@
-package com.example.mybean.order.commons.exception;
+package com.example.mybean.commons.exception;
 
 public class NotFoundException extends RuntimeException{
 	public NotFoundException(String target) {

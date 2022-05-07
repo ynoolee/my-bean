@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.mybean.order.commons.exception.NotFoundException;
+import com.example.mybean.commons.exception.NotFoundException;
 import com.example.mybean.product.exception.StockOutException;
 import com.example.mybean.product.repository.ProductRepository;
 
