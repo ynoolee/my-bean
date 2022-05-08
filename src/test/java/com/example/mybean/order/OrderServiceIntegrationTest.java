@@ -27,12 +27,13 @@ class OrderServiceIntegrationTest {
 	private Product richProduct;
 	private Product productToBeSoldOut;
 	private final int richProductInitStock = 10;
-	private final int soldQuantity = 3;
+	private final int toBeSoldProductInitStock = 3;
+	private final int soldQuantity = 4;
 
 	@BeforeEach
 	public void setUp(){
 		richProduct = productService.createProduct("충분 상품", 10000L, richProductInitStock, null);
-		productToBeSoldOut = productService.createProduct("품절될 상품", 10000L, 3, null);
+		productToBeSoldOut = productService.createProduct("품절될 상품", 10000L, toBeSoldProductInitStock, null);
 	}
 
 	@Test
@@ -57,7 +58,7 @@ class OrderServiceIntegrationTest {
 			orderService.createOrder("abc@naver.com",
 				"Triple Street",
 				"22001",
-				List.of(new OrderItem(productToBeSoldOut.getProductId(), 4)))
+				List.of(new OrderItem(productToBeSoldOut.getProductId(), soldQuantity)))
 		).isInstanceOf(StockOutException.class);
 	}
 
@@ -66,8 +67,8 @@ class OrderServiceIntegrationTest {
 	public void given_orderWhichIncludeOutOfStockProduct_when_tryToOrder_then_theNuberOfProductIsSameAsBefore() {
 		Assertions.assertThatThrownBy(() ->
 			orderService.createOrder("abc@naver.com", "Triple Street", "22001",
-				List.of(new OrderItem(richProduct.getProductId(), 4),
-					new OrderItem(productToBeSoldOut.getProductId(), 4))))
+				List.of(new OrderItem(richProduct.getProductId(), soldQuantity),
+					new OrderItem(productToBeSoldOut.getProductId(), soldQuantity))))
 			.isInstanceOf(StockOutException.class);
 
 		Product productToBeSoldOutFound = productService.getById(productToBeSoldOut.getProductId());
