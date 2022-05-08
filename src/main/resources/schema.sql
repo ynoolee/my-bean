@@ -1,4 +1,6 @@
+drop table if exists order_items;
 drop table if exists products;
+drop table if exists orders;
 
 CREATE TABLE products
 (
