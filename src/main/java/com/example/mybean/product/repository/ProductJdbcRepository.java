@@ -85,6 +85,12 @@ public class ProductJdbcRepository implements ProductRepository {
 		jdbcTemplate.update("DELETE FROM products", Collections.emptyMap());
 	}
 
+	@Override
+	public void deleteById(UUID productId) {
+		jdbcTemplate.update("DELETE FROM products WHERE product_id = :productId",
+			Map.of("productId", productId.toString().getBytes()));
+	}
+
 	private static final RowMapper<Product> productRowMapper = (rs, i) -> {
 		UUID productId = toUUID(rs.getBytes("product_id"));
 		String productName = rs.getString("product_name");

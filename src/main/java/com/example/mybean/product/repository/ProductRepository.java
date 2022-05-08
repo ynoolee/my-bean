@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.example.mybean.product.Product;
+import com.example.mybean.product.model.Product;
 
 public interface ProductRepository {
 	List<Product> findAll();
@@ -18,4 +18,6 @@ public interface ProductRepository {
 	Optional<Product> findByName(String productName);
 
 	void deleteAll();
+
+	void deleteById(UUID productId);
 }
