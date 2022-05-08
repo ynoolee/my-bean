@@ -42,8 +42,21 @@ public class ProductService {
 	}
 
 	@Transactional
+	public Product changeInfo(UUID productId, String productName, long price, String description) {
+		Product product = productRepository.findById(productId)
+			.orElseThrow(() -> new NotFoundException(productId.toString()));
+
+		product.changeProductName(productName);
+		product.changeDescription(description);
+		product.changePrice(price);
+
+		return productRepository.update(product);
+	}
+
+	@Transactional
 	public Product createProduct(String productName, long price, int stock, String description) {
-		Product product = new Product(UUID.randomUUID(), productName, price, stock, description, LocalDateTime.now(), LocalDateTime.now());
+		Product product = new Product(UUID.randomUUID(), productName, price, stock, description, LocalDateTime.now(),
+			LocalDateTime.now());
 
 		return productRepository.insert(product);
 	}
