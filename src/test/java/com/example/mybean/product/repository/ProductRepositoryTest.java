@@ -8,14 +8,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.example.mybean.product.Product;
+import com.example.mybean.product.model.Product;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -89,6 +92,18 @@ public class ProductRepositoryTest {
 		Product foundProduct = repository.findById(newProduct.getProductId()).get();
 
 		assertThat(foundProduct.getStock(), is(beforeStock - decreasedAmount));
+	}
+
+	@Test
+	@DisplayName("중복 ID 를 갖는 Product 를 insert 시 DuplicateKeyException 예외가 발생한다")
+	void given_dupId_when_createDuplicatedProductAndTryInset_then_throwException() {
+		UUID duplicatedId = newProduct.getProductId();
+
+		Product dupProduct = new Product(duplicatedId, "a", 100L, 10, null, LocalDateTime.now(), LocalDateTime.now());
+
+		Assertions.assertThatThrownBy(() ->
+				repository.insert(dupProduct))
+			.isInstanceOf(DuplicateKeyException.class);
 	}
 
 }
