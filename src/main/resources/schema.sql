@@ -29,7 +29,6 @@ CREATE TABLE order_items
     seq        bigint      NOT NULL PRIMARY KEY AUTO_INCREMENT,
     order_id   BINARY(16) NOT NULL,
     product_id BINARY(16) NOT NULL,
-    price      BIGINT      NOT NULL,
     quantity   int         NOT NULL,
     created_at datetime(6) NOT NULL,
     updated_at datetime(6) DEFAULT NULL,
