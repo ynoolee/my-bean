@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.mybean.product.Product;
+import com.example.mybean.product.model.Product;
 
 @Repository
 public class ProductJdbcRepository implements ProductRepository {
@@ -45,14 +45,10 @@ public class ProductJdbcRepository implements ProductRepository {
 
 	@Override
 	public Product insert(Product product) {
-		int update = jdbcTemplate.update(
+		jdbcTemplate.update(
 			"INSERT INTO products(product_id, product_name, price, stock, description, created_at, updated_at)" +
 				" VALUES(UUID_TO_BIN(:productId), :productName, :price, :stock, :description, :createdAt, :updatedAt )",
 			toParamMap(product));
-
-		if (update != 1) {
-			throw new RuntimeException("Product insert 실패");
-		}
 
 		return product;
 	}
@@ -86,7 +82,7 @@ public class ProductJdbcRepository implements ProductRepository {
 
 	@Override
 	public void deleteAll() {
-		jdbcTemplate.update("DELETE FROm products", Collections.emptyMap());
+		jdbcTemplate.update("DELETE FROM products", Collections.emptyMap());
 	}
 
 	private static final RowMapper<Product> productRowMapper = (rs, i) -> {
