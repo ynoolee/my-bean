@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.mybean.commons.exception.NotFoundException;
 import com.example.mybean.product.exception.StockOutException;
+import com.example.mybean.product.model.Product;
 import com.example.mybean.product.repository.ProductRepository;
 
 @Service
