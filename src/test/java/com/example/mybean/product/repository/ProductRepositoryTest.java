@@ -68,7 +68,7 @@ public class ProductRepositoryTest {
 	@Test
 	@DisplayName("상품 수정 가능")
 	void testUpdate() {
-		newProduct.setProductName("updated-product");
+		newProduct.changeProductName("updated-product");
 		repository.update(newProduct);
 
 		Optional<Product> product = repository.findById(newProduct.getProductId());

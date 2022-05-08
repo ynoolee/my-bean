@@ -3,6 +3,8 @@ package com.example.mybean.product;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.springframework.util.Assert;
+
 import com.example.mybean.product.exception.StockOutException;
 
 public class Product {
@@ -16,8 +18,8 @@ public class Product {
 
 	public Product(UUID productId, String productName, long price, int stock, String description,
 		LocalDateTime createdAt, LocalDateTime updatedAt) {
-		checkNull(productId, "id 는 null 이 올 수 없습니다");
-		checkEmpty(productName, "productName 은 빈 칸이 올 수 없습니다");
+		Assert.notNull(productId, "id 는 null 이 올 수 없습니다");
+		Assert.hasLength(productName, "productName 은 비어있는 문자열이면 안됩니다");
 		checkPositiveOrZero(price, "price 는 0 이상이어야 합니다");
 		checkPositiveOrZero(stock, "stock 는 0 이상이어야 합니다");
 
@@ -30,19 +32,7 @@ public class Product {
 		this.updatedAt = updatedAt;
 	}
 
-	public <T> void checkNull(T obj, String message) {
-		if (obj == null) {
-			throw new IllegalArgumentException(message);
-		}
-	}
-
-	public void checkEmpty(CharSequence str, String message) {
-		if (str == null || str.isEmpty()) {
-			throw new IllegalArgumentException(message);
-		}
-	}
-
-	public static void checkPositiveOrZero(long number, String message) {
+	private void checkPositiveOrZero(long number, String message) {
 		if (number < 0) {
 			throw new IllegalArgumentException(message);
 		}
@@ -58,7 +48,7 @@ public class Product {
 		return quantity >= 0;
 	}
 
-	public void decreaseStock(int quantity) throws StockOutException{
+	public void decreaseStock(int quantity) throws StockOutException {
 		if (isPositiveOrZero(quantity)) {
 			this.hasEnoughStock(quantity);
 
@@ -95,17 +85,23 @@ public class Product {
 		return updatedAt;
 	}
 
-	public void setProductName(String productName) {
+	public void changeProductName(String productName) {
+		Assert.hasLength(productName, "productName 은 비어있는 문자열이면 안됩니다");
+
 		this.productName = productName;
 		this.updatedAt = LocalDateTime.now();
 	}
 
-	public void setPrice(long price) {
+	public void changePrice(long price) {
+		this.checkPositiveOrZero(price, "price 는 0 이상이어야 합니다");
+
 		this.price = price;
 		this.updatedAt = LocalDateTime.now();
 	}
 
-	public void setDescription(String description) {
+	public void changeDescription(String description) {
+		Assert.hasLength(description, "description 은 비어있는 문자열이면 안됩니다");
+
 		this.description = description;
 		this.updatedAt = LocalDateTime.now();
 	}
