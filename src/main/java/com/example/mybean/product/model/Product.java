@@ -1,4 +1,4 @@
-package com.example.mybean.product;
+package com.example.mybean.product.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -40,7 +40,7 @@ public class Product {
 
 	private void hasEnoughStock(int quantity) {
 		if (this.stock < quantity) {
-			throw new StockOutException();
+			throw new StockOutException(this.productId.toString());
 		}
 	}
 

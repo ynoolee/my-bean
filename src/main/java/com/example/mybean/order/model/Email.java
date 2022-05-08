@@ -1,4 +1,4 @@
-package com.example.mybean.order;
+package com.example.mybean.order.model;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
