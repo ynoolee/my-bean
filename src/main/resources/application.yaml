@@ -3,3 +3,6 @@ spring:
     url: jdbc:mysql://localhost/my_bean
     username: yeon
     password: root1234
+  sql:
+    init:
+      mode: always
