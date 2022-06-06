@@ -1,8 +1,9 @@
 package com.example.mybean.order;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,14 +48,14 @@ class OrderServiceIntegrationTest {
 
 		Product foundProduct = productService.getById(richProduct.getProductId());
 
-		Assertions.assertThat(foundProduct.getStock())
+		assertThat(foundProduct.getStock())
 			.isEqualTo(richProductInitStock-soldQuantity);
 	}
 
 	@Test
 	@DisplayName("주문하는 아이템 중 하나의 재고가 부족하면 StockOutException 을 throw 한다")
 	public void given_orderWhichIncludeOutOfStockProduct_when_tryToOrder_then_throwException() {
-		Assertions.assertThatThrownBy(() ->
+		assertThatThrownBy(() ->
 			orderService.createOrder("abc@naver.com",
 				"Triple Street",
 				"22001",
@@ -65,7 +66,7 @@ class OrderServiceIntegrationTest {
 	@Test
 	@DisplayName("주문하는 아이템 중 하나의 재고가 부족하면 주문과정을 롤백하여 프로덕트 개수가 주문 전과 같다")
 	public void given_orderWhichIncludeOutOfStockProduct_when_tryToOrder_then_theNuberOfProductIsSameAsBefore() {
-		Assertions.assertThatThrownBy(() ->
+		assertThatThrownBy(() ->
 			orderService.createOrder("abc@naver.com", "Triple Street", "22001",
 				List.of(new OrderItem(richProduct.getProductId(), soldQuantity),
 					new OrderItem(productToBeSoldOut.getProductId(), soldQuantity))))
@@ -74,8 +75,8 @@ class OrderServiceIntegrationTest {
 		Product productToBeSoldOutFound = productService.getById(productToBeSoldOut.getProductId());
 		Product richProductFound = productService.getById(richProduct.getProductId());
 
-		Assertions.assertThat(productToBeSoldOutFound.getStock()).isEqualTo(productToBeSoldOut.getStock());
-		Assertions.assertThat(richProductFound.getStock()).isEqualTo(richProduct.getStock());
+		assertThat(productToBeSoldOutFound.getStock()).isEqualTo(productToBeSoldOut.getStock());
+		assertThat(richProductFound.getStock()).isEqualTo(richProduct.getStock());
 	}
 
 }

@@ -32,7 +32,7 @@ public class OrderRestController {
 	}
 
 	@PutMapping("/api/orders/{orderId}/cancel")
-	public ResponseEntity<?> cancelOrder(@PathVariable UUID orderId, @RequestBody OrderStatus statusRequest) {
+	public ResponseEntity<String> cancelOrder(@PathVariable UUID orderId, @RequestBody OrderStatus statusRequest) {
 		orderService.cancel(orderId);
 
 		return ResponseEntity.ok("주문을 취소하였습니다");

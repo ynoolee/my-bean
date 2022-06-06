@@ -58,7 +58,8 @@ class OrderRepositoryTest {
 		orderRepository.update(order.getOrderId(), OrderStatus.CANCELED);
 
 		Order foundOrder = orderRepository.findById(order.getOrderId()).get();
-		Assertions.assertThat(foundOrder.getOrderStatus()).isEqualTo(OrderStatus.CANCELED);
+		Assertions.assertThat(foundOrder.getOrderStatus())
+			.isEqualTo(OrderStatus.CANCELED);
 	}
 
 	@Test
@@ -69,7 +70,8 @@ class OrderRepositoryTest {
 		orderRepository.update(order.getOrderId(), OrderStatus.CANCELED);
 
 		Order foundOrder = orderRepository.findById(order.getOrderId()).get();
-		Assertions.assertThat(foundOrder.getOrderStatus()).isNotEqualTo(beforeStatus);
+		Assertions.assertThat(foundOrder.getOrderStatus())
+			.isNotEqualTo(beforeStatus);
 	}
 
 	@Test
@@ -80,12 +82,13 @@ class OrderRepositoryTest {
 			.count();
 		int deletedCount = orderRepository.deleteItems(order.getOrderId());
 
-		Assertions.assertThat(deletedCount).isEqualTo(orderedItemCount);
+		Assertions.assertThat(deletedCount)
+			.isEqualTo(orderedItemCount);
 	}
 
 	@Test
 	@DisplayName("존재하지 않는 주문에 대한 update 요청시 Exception 이 발생하지 않는다 ")
-	public void given_newId_when_tryUpdateUsingThisId_thenThrowException(){
+	public void given_newId_when_tryUpdateUsingThisId_thenThrowException() {
 		UUID newId = UUID.randomUUID();
 
 		assertDoesNotThrow(() -> orderRepository.update(newId, OrderStatus.CANCELED));
