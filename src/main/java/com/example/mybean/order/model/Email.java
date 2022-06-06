@@ -7,7 +7,7 @@ import org.springframework.util.Assert;
 
 public class Email {
 	private final String address;
-	private final Pattern pattern = Pattern.compile("\\b[\\w.-]+@[\\w.-]+\\.\\w{2,4}\\b");
+	private final static Pattern pattern = Pattern.compile("\\b[\\w.-]+@[\\w.-]+\\.\\w{2,4}\\b");
 
 	private Email(String email) {
 		Assert.notNull(email, "email 은 null 이 올 수 없습니다");
@@ -33,6 +33,7 @@ public class Email {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Email email1 = (Email)o;
+
 		return Objects.equals(address, email1.address);
 	}
 
