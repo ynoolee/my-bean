@@ -32,7 +32,7 @@ jacocoTestCoverageVerification {
             enabled = true
 
             limit {
-                counter = 'LINE'
+                counter = 'LINE' // 'BRANCH' 가 오면 브랜치 커버리지를 의미하게됨
                 value = 'COVEREDRATIO'
                 minimum = 0.60
             }
@@ -44,6 +44,12 @@ jacocoTestCoverageVerification {
         }
     }
 }
+test {
+    useJUnitPlatform()
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacoco.exec")
+    }
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -53,9 +59,15 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
-    useJUnitPlatform()
-    jacoco {
-        destinationFile = file("$buildDir/jacoco/jacoco.exec")
-    }
+
+task testCoverage(type: Test) {
+    group 'verification'
+    description 'Runs the unit tests with coverage'
+
+    dependsOn(':test',
+            ':jacocoTestReport',
+            ':jacocoTestCoverageVerification')
+
+    tasks['jacocoTestReport'].mustRunAfter(tasks['test'])
+    tasks['jacocoTestCoverageVerification'].mustRunAfter(tasks['jacocoTestReport'])
 }
