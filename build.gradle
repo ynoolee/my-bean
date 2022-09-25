@@ -23,13 +23,14 @@ jacocoTestReport {
         html.enabled true
         // xml.enabled false // 안해주면 어떻게 되지?
     }
+    finalizedBy 'jacocoTestCoverageVerification'
 }
 
 jacocoTestCoverageVerification {
     violationRules {
         rule {
             element = 'CLASS'
-            enabled = true
+            enabled = false
 
             limit {
                 counter = 'LINE' // 'BRANCH' 가 오면 브랜치 커버리지를 의미하게됨
@@ -42,6 +43,24 @@ jacocoTestCoverageVerification {
                 minimum = 0.60
             }
         }
+        rule {
+            element = 'CLASS'
+            enabled = true
+
+//            limit {
+//                counter = 'LINE'
+//                value = 'COVEREDRATIO'
+//                minimum = 0.0
+//            }
+            // 코드의 라인 수 제한
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 10
+            }
+
+            excludes = ["*.*JdbcRepository"]
+        }
     }
 }
 test {
@@ -49,6 +68,7 @@ test {
     jacoco {
         destinationFile = file("$buildDir/jacoco/jacoco.exec")
     }
+    finalizedBy 'jacocoTestReport'
 }
 
 dependencies {
@@ -57,17 +77,4 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-
-task testCoverage(type: Test) {
-    group 'verification'
-    description 'Runs the unit tests with coverage'
-
-    dependsOn(':test',
-            ':jacocoTestReport',
-            ':jacocoTestCoverageVerification')
-
-    tasks['jacocoTestReport'].mustRunAfter(tasks['test'])
-    tasks['jacocoTestCoverageVerification'].mustRunAfter(tasks['jacocoTestReport'])
 }
