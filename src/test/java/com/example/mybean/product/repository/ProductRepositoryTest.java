@@ -3,6 +3,7 @@ package com.example.mybean.product.repository;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
+import com.example.mybean.order.repository.OrderRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -29,9 +30,18 @@ public class ProductRepositoryTest {
 	@Autowired
 	ProductRepository repository;
 
+	@Autowired
+	OrderRepository orderRepository;
+
 	@BeforeEach
 	public void setup() {
 		repository.insert(newProduct);
+	}
+
+	@AfterEach
+	void tearDown() {
+		orderRepository.deleteAll();
+		repository.deleteAll();
 	}
 
 	@Test

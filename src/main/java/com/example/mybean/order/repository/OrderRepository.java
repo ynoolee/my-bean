@@ -14,4 +14,6 @@ public interface OrderRepository {
 	int deleteItems(UUID orderId); // 해당 orderId 에 속한 orderItem 들을 제거
 
 	Optional<Order> findById(UUID orderId);  // items 정보를 제외한 Order 정보만을 포함한 Order flxjs
+
+	void deleteAll();
 }
