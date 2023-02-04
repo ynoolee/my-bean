@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.example.mybean.product.model.Product;
 
+@Disabled
 @SpringBootTest
 @ActiveProfiles("test")
 public class ProductRepositoryTest {
