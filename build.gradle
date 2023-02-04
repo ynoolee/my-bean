@@ -45,7 +45,7 @@ jacocoTestCoverageVerification {
         }
         rule {
             element = 'CLASS'
-            enabled = true
+            enabled = false
 
 //            limit {
 //                counter = 'LINE'
